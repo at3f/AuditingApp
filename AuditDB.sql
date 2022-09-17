@@ -1,8 +1,6 @@
 create database auditDB
 use auditDB;
 
-
-use auditDB
 CREATE TABLE action_type
 (
     id integer primary key auto_increment,
@@ -31,35 +29,31 @@ create table user
 insert into user values(1,'ahmed');
 
 create table be(
-                   id integer primary key auto_increment,
-                   value varchar(15) not null
+    id integer primary key auto_increment,
+    value varchar(15) not null
 );
 insert into be values(1,'vodafone');
 
 create table application(
-                            id integer primary key auto_increment,
-                            price double
+    id integer primary key auto_increment,
+    price double
 );
 insert into application values(1,20);
 
 create table action (
-                        id integer primary key auto_increment,
-                        description_en varchar(100) not null,
-                        description_ar varchar(100) not null,
-                        time date not null,
-                        application_id integer not null,
-                        user_id integer not null,
-                        be_id integer not null,
-                        action_type_id integer not null,
-                        FOREIGN KEY (action_type_id) REFERENCES action_type(id),
-                        FOREIGN KEY (application_id) REFERENCES application(id),
-                        FOREIGN KEY (user_id) REFERENCES user(id),
-                        FOREIGN KEY (be_id) REFERENCES be(id)
+    id integer primary key auto_increment,
+    description_en varchar(100) not null,
+    description_ar varchar(100) not null,
+    time date not null,
+    application_id integer not null,
+    user_id integer not null,
+    be_id integer not null,
+    action_type_id integer not null,
+    FOREIGN KEY (action_type_id) REFERENCES action_type(id),
+    FOREIGN KEY (application_id) REFERENCES application(id),
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (be_id) REFERENCES be(id)
 );
-
-drop table param;
-
-insert into action values(1,'test','test','2012-04-23T18:25:43.511Z',1,1,1,2);
 
 create table param_type
 (
@@ -74,12 +68,11 @@ insert into param_type values(2,'order','Order','طلب');
 insert into param_type values(3,'product','Product','منتج');
 
 create table param(
-                      id integer primary key auto_increment,
-                      identifier varchar(30) not null,
-                      value  varchar(30) not null,
-                      param_type_id integer not null,
-                      action_id integer not null,
-                      FOREIGN KEY (param_type_id) REFERENCES param_type(id),
-                      FOREIGN KEY (action_id) REFERENCES action(id)
+    id integer primary key auto_increment,
+    identifier varchar(30) not null,
+    value  varchar(30) not null,
+    param_type_id integer not null,
+    action_id integer not null,
+    FOREIGN KEY (param_type_id) REFERENCES param_type(id),
+    FOREIGN KEY (action_id) REFERENCES action(id)
 );
-
