@@ -1,6 +1,5 @@
 package com.fawry.auditing_v1.resources;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,35 +23,6 @@ import java.util.Map;
 @RequestMapping("/actions")
 @RestController
 public class ActionResource {
-/*    @GetMapping("/be")
-    public ResponseEntity<List<Action>> getActionsByBeId(@RequestParam Long id){
-        return new ResponseEntity(actionService.listActionsByBeId(id), HttpStatus.ACCEPTED);
-    }
-    @GetMapping("/user")
-    public ResponseEntity<List<Action>> getActionsByUserId(@RequestParam Long id){
-        return new ResponseEntity(actionService.listActionsByUserId(id), HttpStatus.ACCEPTED);
-    }
-    @GetMapping("/actiontype")
-    public ResponseEntity<List<Action>> getActionsByActionTypeId(@RequestParam Long id){
-        return new ResponseEntity(actionService.listActionsByActionTypeId(id), HttpStatus.ACCEPTED);
-    }
-    @GetMapping("/application")
-    public ResponseEntity<List<Action>> getActionsByApplicationId(@RequestParam Long id){
-        return new ResponseEntity(actionService.listActionsByApplicationId(id), HttpStatus.ACCEPTED);
-    }
-    @GetMapping("/param")
-    public ResponseEntity<List<Param>> getActionsByParamValue(@RequestParam String value){
-        return new ResponseEntity(actionService.listActionsByParamValue(value), HttpStatus.ACCEPTED);
-    }
-    @GetMapping("/parami")
-    public ResponseEntity<List<Param>> getActionsByParamIdentifier(@RequestParam String identifier){
-        return new ResponseEntity(actionService.listActionsByParamIdentifier(identifier), HttpStatus.ACCEPTED);
-    }
-    @GetMapping("/multipleSearch")
-    public ResponseEntity<List<Action>> getMActions(@RequestParam Map<String,String> params){
-        return new ResponseEntity(actionService.findActions(params), HttpStatus.ACCEPTED);
-    }*/
-    //===========================================new start=================================================
     @Autowired
     private ActionService actionService;
     @Autowired
