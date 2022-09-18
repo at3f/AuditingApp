@@ -1,0 +1,21 @@
+{
+  "applicationId":1,
+  "userId":1,
+  "beId":1,
+  "actionTypeCode":"order_created",
+  "paramDtos":[
+    {
+      "name":"customer",
+      "identifier":"12",
+      "value":"atef"
+    },{
+      "name":"order",
+      "identifier":"10",
+      "value":"20"
+    },{
+      "name":"product",
+      "identifier":"10",
+      "value":"nokia s7"
+    }
+  ]
+}
