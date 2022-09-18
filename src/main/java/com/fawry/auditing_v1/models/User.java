@@ -11,13 +11,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "_user")
 public class User {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "value")
+    @Column(name = "_value")
     private String value;
     @JsonIgnore
     @OneToMany(mappedBy = "user")

@@ -10,11 +10,13 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "be")
 public class Be {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "_value")
     private String value;
     @JsonIgnore
     @OneToMany(mappedBy = "be")

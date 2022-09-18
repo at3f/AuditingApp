@@ -49,8 +49,8 @@ public class ActionServiceTest {
         actionDto = new ActionDto();
         actionDto.setId(1l);
         actionDto.setActionTypeCode("order_created");
-        actionDto.setBeId(2l);
-        actionDto.setApplicationId(3l);
+        actionDto.setBeId(1l);
+        actionDto.setApplicationId(1l);
         actionDto.setUserId(1l);
 
         params = new ArrayList<>();
@@ -72,7 +72,7 @@ public class ActionServiceTest {
 
     @Test
     public void whenAddActionWithInValidUserId_throwUserNotFoundException(){
-        actionDto.setUserId(2l);
+        actionDto.setUserId(500l);
 
         assertThatThrownBy(() -> actionService.AddAction(actionDto) ).isInstanceOf(UserNotFoundException.class)
                 .hasMessageContaining("User Not Found");

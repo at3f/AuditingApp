@@ -21,24 +21,25 @@ insert into action_type values(2,'order_refunded','order refunded','تم إلغ�
                                'قام المستخدم {{user.value}} بإلغاء الطلب {{order.value}} الذي تم إنشاؤه بواسطة العميل {{customer.value}}');
 
 
-create table user
+create table _user
 (
     id integer primary key auto_increment,
-    value varchar(15) not null
+    _value varchar(30) not null
 );
-insert into user values(1,'ahmed');
+insert into _user values(1,'ahmed');
+insert into _user values(2,'aly');
 
 create table be(
     id integer primary key auto_increment,
-    value varchar(15) not null
+    _value varchar(30) not null
 );
 insert into be values(1,'vodafone');
 
 create table application(
     id integer primary key auto_increment,
-    price double
+    name varchar(30) not null
 );
-insert into application values(1,20);
+insert into application values(1,'App1');
 
 create table action (
     id integer primary key auto_increment,
@@ -51,9 +52,11 @@ create table action (
     action_type_id integer not null,
     FOREIGN KEY (action_type_id) REFERENCES action_type(id),
     FOREIGN KEY (application_id) REFERENCES application(id),
-    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (user_id) REFERENCES _user(id),
     FOREIGN KEY (be_id) REFERENCES be(id)
 );
+ALTER TABLE `auditdb`.`action` 
+CHANGE COLUMN `time` `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP() ;
 
 create table param_type
 (
@@ -70,7 +73,7 @@ insert into param_type values(3,'product','Product','منتج');
 create table param(
     id integer primary key auto_increment,
     identifier varchar(30) not null,
-    value  varchar(30) not null,
+    _value  varchar(30) not null,
     param_type_id integer not null,
     action_id integer not null,
     FOREIGN KEY (param_type_id) REFERENCES param_type(id),
