@@ -45,11 +45,11 @@ public class ActionCustomRepositoryTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        /*User user = new User();
-        user.setValue("ahmed atef");
-        em.persist(user);
-        em.flush();
-        System.out.println("etst");*/
+        /*ActionType actionType = new ActionType();
+        actionType.setCode("tsytvrhd");
+        em.persist(actionType);
+        em.flush();*/
+
         args = new HashMap<>();
     }
 
