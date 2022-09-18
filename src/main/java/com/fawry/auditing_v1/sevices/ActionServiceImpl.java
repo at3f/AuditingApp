@@ -4,6 +4,7 @@ import com.fawry.auditing_v1.dtos.ActionDto;
 import com.fawry.auditing_v1.dtos.ParamDto;
 import com.fawry.auditing_v1.helpers.Validator;
 import com.fawry.auditing_v1.helpers.ActionDescription;
+import com.fawry.auditing_v1.mappers.ActionMapper;
 import com.fawry.auditing_v1.mappers.ActionMapperImpl;
 import com.fawry.auditing_v1.models.Action;
 import com.fawry.auditing_v1.models.User;
@@ -31,6 +32,8 @@ public class ActionServiceImpl implements ActionService {
     private Validator validator;
     @Autowired
     private ActionDescription actionDescription;
+    @Autowired
+    private ActionMapper actionMapper;
     @Override
     public Action AddAction(ActionDto actionDto){
         validator.validateActionRequestBody(actionDto);
@@ -40,7 +43,7 @@ public class ActionServiceImpl implements ActionService {
         ParamDto userParamDto = new ParamDto(user.getId(),null, user.getValue(), "user");
         actionDto.getParamDtos().add(userParamDto);
 
-        Action action = new ActionMapperImpl().mapToAction(actionDto,applicationService,userService,actionTypeService,beService,actionDescription);
+        Action action = actionMapper.mapToAction(actionDto,applicationService,userService,actionTypeService,beService,actionDescription);
         actionDto.getParamDtos().removeIf(c->c.getName()=="user");
 
         return actionRepository.saveAndFlush(action);

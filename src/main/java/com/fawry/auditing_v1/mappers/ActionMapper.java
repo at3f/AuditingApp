@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ActionMapper {
     ActionDto mapToActionDto(Action t);
     @Mappings({
