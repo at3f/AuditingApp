@@ -42,6 +42,8 @@ public class ActionCustomRepositoryTest {
     Param param2;
     User user1;
     User user2;
+    Action action1;
+    Action action2;
     @TestConfiguration
     static class TestConfig {
         @Bean
@@ -91,13 +93,13 @@ public class ActionCustomRepositoryTest {
         paramType1.setCode("product");
         paramType1 = em.persist(paramType1);
 
-        Action action1 = new Action();
+        action1 = new Action();
         action1.setBe(be1);
         action1.setUser(user1);
         action1.setActionType(actionType1);
         action1.setApplication(application1);
         action1 = em.persist(action1);
-        Action action2 = new Action();
+        action2 = new Action();
         action2.setBe(be2);
         action2.setUser(user2);
         action2.setActionType(actionType2);
@@ -108,10 +110,10 @@ public class ActionCustomRepositoryTest {
         param1.setParamType(paramType1);
         param1.setValue("Iphone 6");
         param1.setAction(action1);
-        param1 = em.persist(param1);
+        param1 = em.persistAndFlush(param1);
         param2 = new Param();
         param2.setParamType(paramType1);
-        param2.setValue("Iphone 7");
+        param2.setValue("Nokia 7");
         param2.setAction(action2);
         param2 = em.persist(param2);
 
@@ -124,15 +126,15 @@ public class ActionCustomRepositoryTest {
         args.put("bename",be1.getValue());
         args.put("appid",application1.getId()+"");
         args.put("actiontypeid",actionType1.getId()+"");
-//        args.put("paramtypeid","1");
-//        args.put("paramvalue","iphone");
+        args.put("paramtypeid",paramType1.getId()+"");
+        args.put("paramvalue","Iphone");
         List<Action> actions = actionCustomRepository.findActions(args);
 
         assertThat(actions).extracting(Action::getUser).extracting(User::getValue).containsOnly(user1.getValue());
         assertThat(actions).extracting(Action::getBe).extracting(Be::getValue).containsOnly(be1.getValue());
         assertThat(actions).extracting(Action::getApplication).extracting(Application::getId).containsOnly(application1.getId());
         assertThat(actions).extracting(Action::getActionType).extracting(ActionType::getId).containsOnly(actionType1.getId());
-        //assertThat(actions).flatExtracting(Action::getParams).extracting(Param::getValue).contains("Iphone 6","Iphone 7","Iphone 9+","Iphone x","Iphone X Max");
+        assertThat(actions).containsOnly(action1);
     }
 
     @Test
@@ -176,6 +178,6 @@ public class ActionCustomRepositoryTest {
         args.put("paramvalue","Iphone");
         List<Action> actions = actionCustomRepository.findActions(args);
 
-        //assertThat(actions).flatExtracting(Action::getParams).extracting(Param::getValue).contains(param1.getValue());
+        assertThat(actions).containsOnly(action1);
     }
 }
