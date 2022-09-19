@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin
 @RequestMapping("/actions")
 @RestController
 public class ActionResource {

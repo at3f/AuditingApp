@@ -6,12 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@ToString
 @NoArgsConstructor
 @Data
 @Entity
