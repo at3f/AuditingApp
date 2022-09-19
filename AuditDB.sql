@@ -7,14 +7,14 @@ CREATE TABLE action_type
     code  	 varchar(30) not null,
     name_en  varchar(30)  NOT NULL,
     name_ar  varchar(30) NOT NULL,
-    message_template_en varchar(100) NOT NULL,
-    message_template_ar varchar(100) NOT NULL
+    message_template_en varchar(200) NOT NULL,
+    message_template_ar varchar(200) NOT NULL
 );
 
 
 insert into action_type values(1,'order_created','order created','تم إنشاء الطلب',
                                'Customer {{customer.value}} created order {{order.value}} to buy product {{product.value}}',
-                               'قام العميل {{customer.name}} بإنشاء الطلب {{order.value}} لشراء منتج {{product.value}}');
+                               'قام العميل {{customer.value}} بإنشاء الطلب {{order.value}} لشراء منتج {{product.value}}');
 
 insert into action_type values(2,'order_refunded','order refunded','تم إلغاء الطلب',
                                'User {{user.value}} refunded order {{order.value}} created by customer: {{customer.value}}',
