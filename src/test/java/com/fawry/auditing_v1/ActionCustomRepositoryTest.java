@@ -2,19 +2,15 @@ package com.fawry.auditing_v1;
 
 import com.fawry.auditing_v1.models.*;
 import com.fawry.auditing_v1.repositories.*;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,26 +20,25 @@ import java.util.*;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @TestPropertySource("classpath:application-test.properties")
-@EnableJpaRepositories(basePackageClasses = ActionRepository.class)
-@EntityScan(basePackageClasses = Action.class)
 public class ActionCustomRepositoryTest {
-    final String USER_NAME1 = "ahmed";
-    final String USER_NAME2 = "aly";
-    final String BE_VALUE1 = "vodafone";
-    final String BE_VALUE2 = "Orange";
-    Application application1;
-    Application application2;
-    Be be1;
-    Be be2;
-    ParamType paramType1;
-    ActionType actionType1;
-    ActionType actionType2;
-    Param param1;
-    Param param2;
-    User user1;
-    User user2;
-    Action action1;
-    Action action2;
+    private final String USER_NAME1 = "ahmed";
+    private final String USER_NAME2 = "aly";
+    private final String BE_VALUE1 = "vodafone";
+    private final String BE_VALUE2 = "Orange";
+    private Application application1;
+    private Application application2;
+    private Be be1;
+    private Be be2;
+    private ParamType paramType1;
+    private ActionType actionType1;
+    private ActionType actionType2;
+    private Param param1;
+    private Param param2;
+    private User user1;
+    private User user2;
+    private Action action1;
+    private Action action2;
+    private Action action3;
     @TestConfiguration
     static class TestConfig {
         @Bean
@@ -105,6 +100,13 @@ public class ActionCustomRepositoryTest {
         action2.setActionType(actionType2);
         action2.setApplication(application2);
         action2 = em.persist(action2);
+        action3 = new Action();
+        action3.setBe(be1);
+        action3.setUser(user2);
+        action3.setActionType(actionType1);
+        action3.setApplication(application2);
+        action3 = em.persist(action3);
+
 
         param1 = new Param();
         param1.setParamType(paramType1);
@@ -121,63 +123,87 @@ public class ActionCustomRepositoryTest {
     }
 
     @Test
-    public void shouldAllActionsMatchAllArguments(){
+    public void shouldFindAllActionsHaveUser1(){
         args.put("username",user1.getValue());
-        args.put("bename",be1.getValue());
-        args.put("appid",application1.getId()+"");
-        args.put("actiontypeid",actionType1.getId()+"");
-        args.put("paramtypeid",paramType1.getId()+"");
-        args.put("paramvalue","Iphone");
         List<Action> actions = actionCustomRepository.findActions(args);
 
         assertThat(actions).extracting(Action::getUser).extracting(User::getValue).containsOnly(user1.getValue());
-        assertThat(actions).extracting(Action::getBe).extracting(Be::getValue).containsOnly(be1.getValue());
-        assertThat(actions).extracting(Action::getApplication).extracting(Application::getId).containsOnly(application1.getId());
-        assertThat(actions).extracting(Action::getActionType).extracting(ActionType::getId).containsOnly(actionType1.getId());
-        assertThat(actions).containsOnly(action1);
     }
-
     @Test
-    public void shouldAllActionsHave_UserWhichValueIsAhmed(){
-        args.put("username",USER_NAME1);
+    public void shouldFindAllActionsHaveBe1(){
+        args.put("bename",be1.getValue());
         List<Action> actions = actionCustomRepository.findActions(args);
 
-        assertThat(actions).extracting(Action::getUser).extracting(User::getValue).containsOnly(USER_NAME1);
+        assertThat(actions).extracting(Action::getBe).extracting(Be::getValue).containsOnly(be1.getValue()).doesNotContain(be2.getValue());
     }
     @Test
-    public void shouldAllActionsHave_BeWhichValueIsVodafone(){
-        args.put("bename",BE_VALUE1);
-        List<Action> actions = actionCustomRepository.findActions(args);
-
-        assertThat(actions).extracting(Action::getBe).extracting(Be::getValue).containsOnly(BE_VALUE1).doesNotContain(BE_VALUE2);
-    }
-    @Test
-    public void shouldAllActionsHave_BeWhichValueContainsSubString(){
+    public void shouldFindAllActionsHave_BeWhichValueContainsSubString(){
         args.put("bename","range");
         List<Action> actions = actionCustomRepository.findActions(args);
 
-        assertThat(actions).extracting(Action::getBe).extracting(Be::getValue).contains(BE_VALUE2);
+        assertThat(actions).extracting(Action::getBe).extracting(Be::getValue).contains(be2.getValue());
     }
     @Test
-    public void shouldAllActionsHave_AppWhichIdIs1(){
+    public void shouldFindAllActionsHaveApplication1(){
         args.put("appid",application1.getId()+"");
         List<Action> actions = actionCustomRepository.findActions(args);
 
         assertThat(actions).extracting(Action::getApplication).extracting(Application::getId).containsOnly(application1.getId());
     }
     @Test
-    public void shouldAllActionsHave_ActionTypeWhichIdIs1(){
+    public void shouldFindAllActionsHaveActionType1(){
         args.put("actiontypeid",actionType1.getId()+"");
         List<Action> actions = actionCustomRepository.findActions(args);
 
         assertThat(actions).extracting(Action::getActionType).extracting(ActionType::getId).containsOnly(Long.valueOf(actionType1.getId()));
     }
     @Test
-    public void shouldAllActionsHave_ParamWhichValueHasSubString_WithParamTypeId(){
+    public void shouldFindAllActionsHave_ParamWhichValueHasSubString_WithParamTypeId(){
         args.put("paramtypeid",paramType1.getId()+"");
-        args.put("paramvalue","Iphone");
+        args.put("paramvalue","phone");
         List<Action> actions = actionCustomRepository.findActions(args);
 
+        assertThat(actions).containsOnly(action1);
+    }
+    @Test
+    public void shouldFindActionsWhichHaveBe1AndUser2() {
+        args.put("bename",be1.getValue());
+        args.put("username",user2.getValue());
+        List<Action> actions = actionCustomRepository.findActions(args);
+
+        assertThat(actions).containsOnly(action3);
+    }
+    @Test
+    public void shouldFindNoActionsWhichHaveBe2AndUser1() {
+        args.put("bename",be2.getValue());
+        args.put("username",user1.getValue());
+        List<Action> actions = actionCustomRepository.findActions(args);
+
+        assertThat(actions).doesNotContain(action1,action2,action3);
+    }
+    @Test
+    public void shouldFindActionsWhichHaveBe1AndUser2AndActionType1() {
+        args.put("bename",be1.getValue());
+        args.put("username",user2.getValue());
+        args.put("actiontypeid",actionType1.getId()+"");
+        List<Action> actions = actionCustomRepository.findActions(args);
+
+        assertThat(actions).containsOnly(action3);
+    }
+    @Test
+    public void shouldFindAllActionsMatchAllArguments(){
+        args.put("username",user1.getValue());
+        args.put("bename",be1.getValue());
+        args.put("appid",application1.getId()+"");
+        args.put("actiontypeid",actionType1.getId()+"");
+        args.put("paramtypeid",paramType1.getId()+"");
+        args.put("paramvalue","phone");
+        List<Action> actions = actionCustomRepository.findActions(args);
+
+        assertThat(actions).extracting(Action::getUser).extracting(User::getValue).containsOnly(user1.getValue());
+        assertThat(actions).extracting(Action::getBe).extracting(Be::getValue).containsOnly(be1.getValue());
+        assertThat(actions).extracting(Action::getApplication).extracting(Application::getId).containsOnly(application1.getId());
+        assertThat(actions).extracting(Action::getActionType).extracting(ActionType::getId).containsOnly(actionType1.getId());
         assertThat(actions).containsOnly(action1);
     }
 }
