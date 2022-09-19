@@ -14,14 +14,6 @@ public class ActionCustomRepositoryImpl implements ActionCustomRepository {
     @PersistenceContext
     private EntityManager em;
 
-
-    public ActionCustomRepositoryImpl(EntityManager em) {
-        this.em = em;
-    }
-
-    public ActionCustomRepositoryImpl() {
-    }
-
     public List<Action> findActions(Map<String,String> args){
         final JPAQuery<Action> query = new JPAQuery<>(em);
         final QAction action = QAction.action;
