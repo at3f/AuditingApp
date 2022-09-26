@@ -20,10 +20,7 @@ public class Consumer {
     private ParamService paramService;
 
     @RabbitListener(queues = {"${queue.name}"})
-    public void receive(@Payload String fileBody) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        ActionDto actionDto = mapper.readValue(fileBody, ActionDto.class);
-
+    public void receive(@Payload ActionDto actionDto){
         Action actionSaved = actionService.AddAction(actionDto);
         paramService.saveAll(actionDto.getParamDtos(),actionSaved);
     }

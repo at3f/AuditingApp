@@ -30,16 +30,12 @@ public class ActionResource {
     @Autowired
     private Publisher publisher;
     @PostMapping
-    public ResponseEntity<String> addAction(@RequestBody final ActionDto actionDto) throws JsonProcessingException {
+    public ResponseEntity<String> addAction(@RequestBody final ActionDto actionDto){
         try{
             validator.validateActionRequestBody(actionDto);
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(actionDto);
-            publisher.send(json);
+            publisher.send(actionDto);
             return new ResponseEntity("", HttpStatus.CREATED);
-        }catch (InvalidFormatException e){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,e.getMessage());
-        }catch (InvalidDataAccessApiUsageException e){
+        } catch (InvalidDataAccessApiUsageException e){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,e.getMessage());
         }catch (EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());

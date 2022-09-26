@@ -3,11 +3,12 @@ package com.fawry.auditing_v1.dtos;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 @NoArgsConstructor
 @Data
-public class ActionDto {
+public class ActionDto implements Serializable {
     private Long id;
     private String description_en;
     private String description_ar;
