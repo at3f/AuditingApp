@@ -10,7 +10,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Data
 public class ParamDto implements Serializable {
-    private Long id;
     private String identifier;
     private String value;
     private String name;

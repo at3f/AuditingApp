@@ -18,8 +18,6 @@ public class ParamServiceImpl implements ParamService {
     @Autowired
     private ParamTypeService paramTypeService;
     @Autowired
-    private ActionService actionService;
-    @Autowired
     private ParamMapper paramMapper;
     @Override
     public Param save(Param param){
@@ -28,7 +26,7 @@ public class ParamServiceImpl implements ParamService {
     @Override
     public List<Param> saveAll(List<ParamDto> paramDtos, Action action){
 
-        List<Param> params = paramMapper.mapToParams(paramDtos,action,actionService,paramTypeService);
+        List<Param> params = paramMapper.mapToParams(paramDtos,action,paramTypeService);
 
         return paramRepository.saveAllAndFlush(params);
     }

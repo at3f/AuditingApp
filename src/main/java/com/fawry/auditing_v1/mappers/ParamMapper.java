@@ -17,13 +17,13 @@ public interface ParamMapper {
     ParamDto mapToParamDto(Param t);
 
     @Mappings({
-            @Mapping(target = "action", expression = "java(actionService.findActionById(action.getId()))"),
+            @Mapping(target = "action", expression = "java(action)"),
             @Mapping(target = "paramType", expression = "java(paramTypeService.findParamTypeByCode(t.getName()).get())")
     })
-    Param mapToParam(ParamDto t, @Context Action action, @Context ActionService actionService, @Context ParamTypeService paramTypeService);
+    Param mapToParam(ParamDto t, @Context Action action, @Context ParamTypeService paramTypeService);
     @Mappings({
-            @Mapping(target = "action", expression = "java(actionService.findActionById(action.getId()))"),
+            @Mapping(target = "action", expression = "java(action)"),
             @Mapping(target = "paramType", expression = "java(paramTypeService.findParamTypeByCode(t.getName()).get())"),
     })
-    List<Param> mapToParams(List<ParamDto> t, @Context Action action, @Context ActionService actionService, @Context ParamTypeService paramTypeService);
+    List<Param> mapToParams(List<ParamDto> t, @Context Action action, @Context ParamTypeService paramTypeService);
 }

@@ -40,7 +40,7 @@ public class ActionServiceImpl implements ActionService {
 
         User user = userService.findUserById(actionDto.getUserId()).get();
 
-        ParamDto userParamDto = new ParamDto(user.getId(),null, user.getValue(), "user");
+        ParamDto userParamDto = new ParamDto(null, user.getValue(), "user");
         actionDto.getParamDtos().add(userParamDto);
 
         Action action = actionMapper.mapToAction(actionDto,applicationService,userService,actionTypeService,beService,actionDescription);

@@ -47,7 +47,7 @@ public class ActionServiceTest {
     void setUp() {
 
         actionDto = new ActionDto();
-        actionDto.setId(1l);
+        //actionDto.setId(1l);
         actionDto.setActionTypeCode("order_created");
         actionDto.setBeId(1l);
         actionDto.setApplicationId(1l);
@@ -57,7 +57,7 @@ public class ActionServiceTest {
         paramDto = new ParamDto();
         paramDto.setIdentifier("test");
         paramDto.setName("order");
-        paramDto.setId(90l);
+        //paramDto.setId(90l);
         paramDto.setValue("90");
         params.add(paramDto);
         actionDto.setParamDtos(params);

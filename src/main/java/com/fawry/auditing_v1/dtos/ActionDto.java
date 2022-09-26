@@ -9,11 +9,6 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class ActionDto implements Serializable {
-    private Long id;
-    private String description_en;
-    private String description_ar;
-    private Date time;
-
     private Long applicationId;
     private Long userId;
     private Long beId;
